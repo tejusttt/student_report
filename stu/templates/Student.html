@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block start %}
+
+<style>
+    .custom-pagination .page-link {
+      color: #020301;
+      background-color: #798ea5; /* Blue background color */
+      border-color: #01070e; /* Blue border color */
+    }
+  
+    .custom-pagination .page-link:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+      border-color: #000000; /* Darker blue border on hover */
+    }
+  </style>
+
+  <!-- <div class="container mt-5">
+    <div class="row justify-content-center"> 
+      <div class="col-md-6"> 
+        <form>
+          <div class="input-group mb-4">
+            <input type="text" name="search" class="form-control" placeholder="Search Student" aria-label="Search" aria-describedby="search-btn" style="border-radius: 20px;">
+            <div class="input-group-append">
+              <button class="btn btn-primary mx-2" type="submit" id="search-btn">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+  
+<div class="container mt-5">
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Student ID</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Student Department</th>
+        <th scope="col">Student Age</th>
+        <th scope="col">Student Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stud in queryset %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+          <!-- <a href="/see_marks/{{ stud.student_id }}"> -->
+          <a href="{% url 'see_marks' stud.student_id %}">
+            {{ stud.student_id }}
+          </a>
+        </td>
+        <td>{{ stud.student_name }}</td>
+        <td>{{ stud.department }}</td>
+        <td>{{ stud.student_age }}</td>
+        <td>{{ stud.student_email }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- Pagination -->
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center custom-pagination"> <!-- Added custom-pagination class -->
+      {% if queryset.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">First</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ queryset.previous_page_number }}">Previous</a>
+      </li>
+      {% endif %}
+  
+      <li class="page-item">
+        <span class="page-link">Page {{ queryset.number }} of {{ queryset.paginator.num_pages}}</span>
+      </li>
+  
+      {% if queryset.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ queryset.next_page_number }}">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ queryset.paginator.num_pages }}">Last</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  
+  
+</div>
+{% endblock start %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% block start %}
+
+<div class="container mt-3">
+    <div class="mt-1">
+        <h2><i> Student Information</i></h2>
+        <hr>
+        <p><b>Student Name: {{ queryset.0.student.student_name }}</b></p>
+        <p><b>Student Department: {{ queryset.0.student.department.department }}</b></p>
+    </div>
+    <hr>
+    <div>
+        <p><b>Rank:</b></p>
+        <p><b>Total:{{total_marks}}</b> </p>
+        <p><b>Percentage : {{total_marks_percentage |floatformat:2 }} </b></p>
+    </div>
+    <hr>
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for marks in queryset %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ marks.subject }}</td>
+            <td>{{ marks.marks }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <hr style="border-top: 2px solid #212529;" >
+</div>
+
+{% endblock start %}
